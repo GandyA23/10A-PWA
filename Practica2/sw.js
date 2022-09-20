@@ -1,4 +1,14 @@
-const INIT_MSG = 'SW:';
+const INIT_LOG_MSG = 'SW:';
+const PATHS_IMG = [
+    'images/html-blue.png',
+    'images/github.webp',
+    'images/csharp.png',
+];
+
+// Opciones
+// g: Global
+// i: Case Insensitive
+const REGEX_IMG_EXTENSION =  /\.(jpg|jpeg|png|gif|webp)$/gi;
 
 console.log("SW: Hola Mundo Gandy!");
 
@@ -7,26 +17,40 @@ console.log("SW: Hola Mundo Gandy!");
 
 // Evento de instalación
 self.addEventListener('install', event => {
-    console.log(INIT_MSG, 'install');
+    console.log(INIT_LOG_MSG, 'install');
 });
 
 // Evento de peticiones
 self.addEventListener('fetch', event => {
-    /*
-    // Intercepta todos los archivos .css y responde con una imagen, esto provoca que los estilos mueran en la página.
+    // En algún punto se llamo a changeCssToImage(event);
+    returnCustomCss(event);
+    changeImage(event);
+})
+
+// Funciones
+/**
+ * Intercepta todos los archivos .css y responde con una imagen
+ * @param {*} event 
+ */
+function changeCssToImage (event) {
+    // Esto provoca que los estilos mueran en la página.
     if (event.request.url.includes('.css')) {
         // Imprime solo los archivos con extención css
-        console.log(INIT_MSG, event.request.url);
+        console.log(INIT_LOG_MSG, event.request.url);
     
         // En el mismo evento, responde con un fetch a la url
-        event.respondWith(fetch('images/html-blue.png'));
+        event.respondWith(fetch(PATH_IMG));
     }
-    */  
+}
 
-    // Cambia los estilos desde el Service Worker
+/**
+ * Cambia la petición de estilos con uno personalizado
+ * @param {*} event 
+ */
+function returnCustomCss (event) {
     if (event.request.url.includes('style.css')) {
         // Imprime solo los archivos con extención css
-        console.log(INIT_MSG, event.request.url);
+        console.log(INIT_LOG_MSG, event.request.url);
 
         // Crea una respuesta y retornala
         const resp = new Response(`
@@ -44,4 +68,16 @@ self.addEventListener('fetch', event => {
         // En el mismo evento, responde con una respuesta personalizada
         event.respondWith(resp);
     }
-})
+}
+
+/**
+ * Intercepta las imagenes y las cambia por las que se encuentran en el proyecto
+ * @param {*} event 
+ */
+function changeImage (event) {
+    let index = Math.floor(Math.random() * PATHS_IMG.length);
+    if (REGEX_IMG_EXTENSION.test(event.request.url)) {
+        console.log(INIT_LOG_MSG, event.request.url);
+        event.respondWith(fetch(PATHS_IMG[index]));
+    } 
+}
