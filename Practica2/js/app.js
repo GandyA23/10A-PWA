@@ -5,4 +5,6 @@ if (navigator.serviceWorker) {
     // Registra el archivo js al navegador
     // Es necesario colocar el archivo js en la raíz para que tenga control de toda la aplicación.  
     navigator.serviceWorker.register("/sw.js");
+} else {
+    console.error("El navegador no soporta el Service Worker");
 }

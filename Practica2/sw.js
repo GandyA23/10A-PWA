@@ -23,8 +23,9 @@ self.addEventListener('install', event => {
 // Evento de peticiones
 self.addEventListener('fetch', event => {
     // En algún punto se llamo a changeCssToImage(event);
-    returnCustomCss(event);
-    changeImage(event);
+    // En algún punto se llamo a returnCustomCss(event);
+    // En algún punto se llamo a changeImage(event);
+    handleErrors(event);
 })
 
 // Funciones
@@ -75,9 +76,32 @@ function returnCustomCss (event) {
  * @param {*} event 
  */
 function changeImage (event) {
-    let index = Math.floor(Math.random() * PATHS_IMG.length);
     if (REGEX_IMG_EXTENSION.test(event.request.url)) {
         console.log(INIT_LOG_MSG, event.request.url);
-        event.respondWith(fetch(PATHS_IMG[index]));
+        event.respondWith(fetch(PATHS_IMG[Math.floor(Math.random() * PATHS_IMG.length)]));
     } 
+}
+
+/**
+ * Realiza la petición a los recursos para verificar si existen
+ * @param {*} event 
+ */
+function handleResourceErrors (event) {
+    // Verifica si el recurso a solicitar existe
+    const response = fetch(event.request)
+        .then(resp => {
+            console.log(INIT_LOG_MSG, resp);
+
+            if (resp.ok)
+                return resp;
+
+            // Retorna una imagen en caso de que la respuesta no haya sido exitosa
+            return fetch(PATHS_IMG[Math.floor(Math.random() * PATHS_IMG.length)]);
+        })
+        .catch(error => {
+            console.log(INIT_LOG_MSG, ' error ', error);
+            return error;
+        });
+
+    event.respondWith(response);
 }
