@@ -9,6 +9,13 @@ const ELEMENTS_CACHE = {
     [STATIC_CACHE_NAME]: [
         `${ROOT_PATH}/`, 
         `${ROOT_PATH}/index.html`,
+        `${ROOT_PATH}/images/icons/android-launchericon-72-72.png`,
+        `${ROOT_PATH}/images/icons/android-launchericon-96-96.png`,
+        `${ROOT_PATH}/images/icons/android-launchericon-144-144.png`,
+        `${ROOT_PATH}/images/icons/android-launchericon-144-144.png`,
+        `${ROOT_PATH}/images/icons/android-launchericon-144-144.png`,
+        `${ROOT_PATH}/images/icons/android-launchericon-192-192.png`,
+        `${ROOT_PATH}/images/icons/android-launchericon-512-512.png`,
     ],
     [INMUTABLE_CACHE_NAME]: [
         // Los archivos de Bootstrap pueden ser actualizados debido a su versión, se dice que son archivos inmutables.
