@@ -9,10 +9,9 @@ const ELEMENTS_CACHE = {
     [STATIC_CACHE_NAME]: [
         `${ROOT_PATH}/`, 
         `${ROOT_PATH}/index.html`,
+        `${ROOT_PATH}/images/icons/android-launchericon-48-48.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-72-72.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-96-96.png`,
-        `${ROOT_PATH}/images/icons/android-launchericon-144-144.png`,
-        `${ROOT_PATH}/images/icons/android-launchericon-144-144.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-144-144.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-192-192.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-512-512.png`,
