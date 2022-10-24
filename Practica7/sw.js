@@ -1,14 +1,21 @@
 const LOG_MSG = 'SW:';
 const ROOT_PATH = "/10A-PWA/Practica7";
-const STATIC_CACHE_NAME = 'static-cache-v1.0';
+const STATIC_CACHE_NAME = 'static-cache-v1.1';
 const INMUTABLE_CACHE_NAME = 'inmutable-cache-v1.0';
 const DYNAMIC_CACHE_NAME = 'dynamic-cache-v1.0';
-const LIMIT_ELEMENTS = 20;
+const LIMIT_ELEMENTS = 40;
+
+const DEFAULT_RESPONSE = {
+    '/html': `${ROOT_PATH}/pages/offline.html`,
+    'image/': `${ROOT_PATH}/images/image-not-found.svg`
+};
 
 const ELEMENTS_CACHE = {
     [STATIC_CACHE_NAME]: [
         `${ROOT_PATH}/`, 
         `${ROOT_PATH}/index.html`,
+        DEFAULT_RESPONSE['/html'],
+        DEFAULT_RESPONSE['image/'],
         `${ROOT_PATH}/images/icons/android-launchericon-48-48.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-72-72.png`,
         `${ROOT_PATH}/images/icons/android-launchericon-96-96.png`,
@@ -37,24 +44,37 @@ self.addEventListener('install', event => {
 
 // Estrategía Cache With Network fallback
 self.addEventListener('fetch', (event) => {
-    let respFetch;
-
-    if (existsElementInAppShell(event.request.url)) {
-        respFetch = onlyCache(event.request);
-    } else {
-        respFetch = getResponseNetwork(event.request); 
-    }
+    let respFetch = onlyCache(event.request).then((element) => {
+        if (element)
+            return element;
+        return getResponseNetwork(event.request);
+    });
 
     return event.respondWith(respFetch);
 });
 
-// Verifica si un elemento existe en el arreglo de elementos en cache
-function existsElementInAppShell(element) {
-    for (const elements of Object.values(ELEMENTS_CACHE))
-        if (elements.includes(element)) 
-            return true;
-    return false;
-}
+// Se detona la activación cada vez que se abre la pestaña una vez cerrada por completo
+self.addEventListener('activate', (event) => {
+    console.log(LOG_MSG, 'Activado!');
+
+    // Elimina los caches de versiones anteriores
+    const promDelete = caches.keys().then((cacheNames) => {
+        for (const cacheName of cacheNames) {
+            if (cacheName !== STATIC_CACHE_NAME && cacheName.includes('static'))
+                return caches.delete(cacheName);
+
+            if (cacheName !== INMUTABLE_CACHE_NAME && cacheName.includes('inmutable'))
+                return caches.delete(cacheName);
+
+            if (cacheName !== DYNAMIC_CACHE_NAME && cacheName.includes('dynamic'))
+                return caches.delete(cacheName);
+        }
+
+        return cacheNames;
+    });
+
+    event.waitUntil(promDelete);
+});
 
 // Retorna el elemento en cache
 function onlyCache(req) {
@@ -64,17 +84,17 @@ function onlyCache(req) {
 // Ve al network y consulta todos los recursos
 function getResponseNetwork(req) {
     return fetch(req).then((respWeb) => {
-        // En caso de que no exista una respuesta, entonces bucamos en cache 
-        if (!respWeb)
-            return onlyCache(req);
-
         caches.open(DYNAMIC_CACHE_NAME).then(async (cache) => {
             await cache.put(req, respWeb);
             cleanCache(DYNAMIC_CACHE_NAME, LIMIT_ELEMENTS);
         });
         return respWeb.clone();
-    }).catch(() => {
-        return onlyCache(req);
+    }).catch((error) => {
+        // retorna una respuesta default en caso de que el usuario no cuente con internet
+        // Retorna una página offline u otro recurso dentro de DEFAULT_RESPONSE
+        for (const key of Object.keys(DEFAULT_RESPONSE))
+            if (req.headers.get('accept').includes(key)) 
+                return onlyCache(DEFAULT_RESPONSE[key]);
     });
 }
 
