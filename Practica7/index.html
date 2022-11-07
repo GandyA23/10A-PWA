@@ -71,7 +71,7 @@
                   <div class="col">
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label h5">Mi nota</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <textarea id="textareaNote" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                     </button>
                   </div>
                   <div class="col-6 text-end">
-                    <button class="btn btn-sm btn-success">
+                    <button id="buttonSave" class="btn btn-sm btn-success">
                       Guardar
                     </button>
                   </div>
@@ -92,51 +92,30 @@
             <!-- END CARD -->
           </div>
         </div>
+
+        <div class="row">
+          <div class="col">
+            <!-- Toast -->
+            <div id="divToast" class="mx-auto my-auto toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="d-flex">
+                <div id="divToastMessage" class="toast-body">
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            </div>
+          </div>
+        </div>
        
         <hr class="border-5 opacity-75 border-primary">
         
         <h3 class="text-primary">Mis notas</h3>
         
-        <!-- START CARD -->
-        <div class="card my-2">
-          <div class="card-body">
-              <div class="row">
-                <div class="col-3">
-                  <img src="https://picsum.photos/seed/image1/200/200" class="img-fluid img-thumbnail" alt="Imagen relacionada a la nota">
-                </div>
-                <div class="col text-truncate">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem rerum veniam obcaecati quasi ratione, omnis perferendis quisquam laborum qui facere nihil voluptatum, officiis quas earum sit quo magni reprehenderit odio?
-                </div>
-              </div>
-          </div>
-        </div>
-        <!-- END CARD -->
-
-        <!-- START CARD -->
-        <div class="card my-2">
-          <div class="card-body">
-              <div class="row">
-                <div class="col-3">
-                  <img src="https://picsum.photos/seed/image2/200/200" class="img-fluid img-thumbnail" alt="Imagen relacionada a la nota">
-                </div>
-                <div class="col text-truncate">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem rerum veniam obcaecati quasi ratione, omnis perferendis quisquam laborum qui facere nihil voluptatum, officiis quas earum sit quo magni reprehenderit odio?
-                </div>
-              </div>
-          </div>
-        </div>
-        <!-- END CARD -->
+        <div id="divNotes"></div>
     </div>
     <!-- END CONTENT -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script>
-        const ROOT_PATH = "/10A-PWA/Practica7";
-        
-        if (navigator.serviceWorker) {
-            navigator.serviceWorker.register(`${ROOT_PATH}/sw.js`);
-        }
-    </script>
+    <script type="module" src="/10A-PWA/Practica7/js/app.js"></script>
   </body>
 </html>
