@@ -92,25 +92,33 @@
             <!-- END CARD -->
           </div>
         </div>
-
-        <div class="row">
-          <div class="col">
-            <!-- Toast -->
-            <div id="divToast" class="mx-auto my-auto toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="d-flex">
-                <div id="divToastMessage" class="toast-body">
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-            </div>
-          </div>
-        </div>
        
         <hr class="border-5 opacity-75 border-primary">
         
         <h3 class="text-primary">Mis notas</h3>
         
+        <!-- Contenedor de las notas -->
         <div id="divNotes"></div>
+
+        <hr class="border-5 opacity-75 border-primary">
+
+        <!-- Cargar más notas -->
+        <div class="my-3">
+          <button id="buttonLoadNotes" class="btn btn-md btn-info">
+            Cargar más notas
+          </button>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+          <div id="divToast" class="mx-auto my-auto toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div id="divToastMessage" class="toast-body">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+        </div>
     </div>
     <!-- END CONTENT -->
 

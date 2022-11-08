@@ -1,14 +1,24 @@
 const ROOT_PATH = "/10A-PWA/Practica7";
 
-import { collection, query, where, getDocs, getFirestore, addDoc } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js"
+import { collection, query, orderBy, getDocs, getFirestore, addDoc, startAfter, limit } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js"
 import { } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-storage.js"
 import { app } from "/10A-PWA/Practica7/js/firebase.js"
 
 const db = getFirestore(app);
 
-const getAllNotesFirestore = async () => {
-    const q = query(collection(db, "notes"));
+const getAllNotesFirestore = async (lastVisible) => {
+    const queryParams = [
+        collection(db, "notes"), 
+        orderBy("created_at", "desc"), 
+        limit(5)        
+    ];
 
+    // En caso de que envíen una última posición, la considera para la query
+    if (lastVisible) {
+        queryParams.push(startAfter(lastVisible));
+    }
+
+    const q = query(...queryParams);
     const querySnapshot = await getDocs(q);
 
     return querySnapshot.docs.map(doc => {
@@ -17,7 +27,8 @@ const getAllNotesFirestore = async () => {
         return {
             id: doc.id,
             text: note.text,
-            created_at: note.created_at 
+            created_at: note.created_at.toDate(),
+            d: doc
         };
     });
 }
