@@ -115,7 +115,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Actualizar nota</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button id="buttonCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <!-- START CARD -->
@@ -123,12 +123,13 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col">
+                        <input type="hidden" id="inputNoteId">
                         <figure>
                           <blockquote class="blockquote">
                             <label for="textareaNoteUpdate" class="form-label h5">Mi nota</label>
                             <textarea id="textareaNoteUpdate" class="form-control" rows="3"></textarea>
                           </blockquote>
-                          <figcaption id="createdAtUpdate" class="blockquote-footer">
+                          <figcaption id="createdAtUpdate" class="blockquote-footer mt-3">
                           </figcaption>
                         </figure>
                       </div>

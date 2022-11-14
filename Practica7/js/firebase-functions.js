@@ -1,6 +1,6 @@
 const ROOT_PATH = "/10A-PWA/Practica7";
 
-import { collection, query, orderBy, getDocs, getFirestore, addDoc, startAfter, limit } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js"
+import { collection, query, orderBy, getDocs, getFirestore, addDoc, startAfter, limit, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js"
 import { } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-storage.js"
 import { app } from "/10A-PWA/Practica7/js/firebase.js"
 
@@ -37,16 +37,32 @@ const addNoteFirestore = async (note) => {
     try {
         // Add a new document with a generated id.
         const docRef = await addDoc(collection(db, "notes"), note);
-    
-        console.log("Document written with ID in notes: ", docRef.id);
 
         return docRef.id;
     } catch (ex) {
+        console.error(ex);
         return 'no-created';
+    }
+}
+
+const updateNoteFirestore = async(note) => {
+    try {
+        // Update a document.
+        const noteRef = doc(db, "notes", note.id);
+
+        await updateDoc(noteRef, {
+            text: note.text
+        });
+
+        return true;
+    } catch (ex) {
+        console.error(ex);
+        return false;
     }
 }
 
 export {
     getAllNotesFirestore,
-    addNoteFirestore
+    addNoteFirestore,
+    updateNoteFirestore
 }
