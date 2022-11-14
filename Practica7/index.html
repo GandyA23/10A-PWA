@@ -70,8 +70,8 @@
                 <div class="row">
                   <div class="col">
                     <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label h5">Mi nota</label>
-                      <textarea id="textareaNote" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <label for="textareaNote" class="form-label h5">Mi nota</label>
+                      <textarea id="textareaNote" class="form-control" rows="3"></textarea>
                     </div>
                   </div>
                 </div>
@@ -107,6 +107,50 @@
           <button id="buttonLoadNotes" class="btn btn-md btn-info">
             Cargar más notas
           </button>
+        </div>
+
+        <!-- Full screen modal to edit note -->
+        <div id="modalUpdateNote" class="modal fade" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalUpdateNoteLabel" aria-hidden="true">
+          <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Actualizar nota</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- START CARD -->
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <figure>
+                          <blockquote class="blockquote">
+                            <label for="textareaNoteUpdate" class="form-label h5">Mi nota</label>
+                            <textarea id="textareaNoteUpdate" class="form-control" rows="3"></textarea>
+                          </blockquote>
+                          <figcaption id="createdAtUpdate" class="blockquote-footer">
+                          </figcaption>
+                        </figure>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <button class="btn btn-sm btn-outline-primary">
+                          <em class="fa-solid fa-camera"></em>
+                        </button>
+                      </div>
+                      <div class="col-6 text-end">
+                        <button id="buttonUpdate" class="btn btn-sm btn-success">
+                          Actualizar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END CARD -->
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Toast -->

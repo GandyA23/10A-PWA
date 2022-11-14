@@ -7,17 +7,33 @@ if (navigator.serviceWorker) {
 }
 */
 
+
+// Elements to show new notes
 const divNotes = document.getElementById('divNotes');
+
+// Elements to show message
 const divToast = document.getElementById("divToast");
 const divToastMessage = document.getElementById("divToastMessage");
+
+// Elements to save a note
 const textareaNote = document.getElementById("textareaNote");
+
+// Elements to update a note
+const textAreaNoteUpdate = document.getElementById('textareaNoteUpdate');
+const captionCreatedAtUpdate = document.getElementById('createdAtUpdate');
 
 // En base al último registro
 let lastVisible = null;
 
 const pushNoteToDiv = (note, first) => {
+
+    const text = note.text;
+    const created_at = note.created_at.toLocaleString('es-MX');
+    const textEscaped = text.replaceAll('"', "&quote;");
+    console.log(textEscaped, text);
+
     const cardNote = `
-    <div class="card my-2">
+    <div class="card my-2" data-bs-toggle="modal" data-bs-target="#modalUpdateNote" data-bs-text="${textEscaped}" data-bs-created_at="${created_at}">
         <div class="card-body">
             <div class="row">
                 <div class="col-3">
@@ -26,10 +42,10 @@ const pushNoteToDiv = (note, first) => {
                 <div class="col">
                     <figure>
                         <blockquote class="blockquote">
-                            <p class="text-truncate">${note.text}</p>
+                            <p class="text-truncate">${text}</p>
                         </blockquote>
                         <figcaption class="blockquote-footer">
-                            ${note.created_at.toLocaleString('es-MX')}
+                            ${created_at}
                         </figcaption>
                     </figure>
                 </div>
@@ -92,7 +108,21 @@ const showToast = (status, message) => {
     new bootstrap.Toast(divToast).show();
 }
 
+// Events listeners
 document.getElementById("buttonSave").addEventListener('click', saveNote);
 document.getElementById("buttonLoadNotes").addEventListener('click', getAllNotes);
+
+document.getElementById('modalUpdateNote').addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    
+    // Extract info from data-bs-* attributes
+    const text = button.getAttribute('data-bs-text').replaceAll("&quote;", '"');
+    const created_at = button.getAttribute('data-bs-created_at');
+
+    // Update the modal's content.
+    textAreaNoteUpdate.value = text;
+    captionCreatedAtUpdate.innerHTML = `Fecha de creación: ${created_at}`;
+  })
 
 getAllNotes();
