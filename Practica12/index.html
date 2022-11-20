@@ -16,29 +16,51 @@
 
     <!-- START CONTENT -->
     <div class="container-fluid my-3">
-        <h1 class="text-center text-primary"> Acceso a la camara </h1>
+        <h1 class="text-center text-primary"> Uso de cámara en PWA </h1>
 
         <div class="row my-4">
           <div class="col text-center">
-            <button id="btnCamera" class="btn btn-outline-success"><em class="bi bi-camera-fill"></em> Abrir camara</button>
+            <button id="btnCamera" class="btn btn-success"><em class="bi bi-camera-fill"></em> Abrir cámara</button>
           </div>
         </div>
 
         <div class="row my-4">
           <div class="col text-center">
-            <video id="videoCamera" class="img-thumbnail" style="width: 90%;" autoplay></video>
+            <video id="videoCamera" class="img-thumbnail" style="max-width: 300px; max-height: 300px;" autoplay></video>
           </div>
         </div>
 
         <div class="row my-4">
           <div class="col text-center">
-            <button id="btnTakePhoto" class="btn btn-outline-danger"><em class="bi bi-record-fill text-danger"></em> Tomar foto</button>
+            <button id="btnTakePhoto" class="btn btn-danger"><em class="bi bi-plus-square-fill"></em> Agregar foto</button>
           </div>
         </div>
 
         <div class="row my-4">
           <div class="col text-center">
-            <img id="imgDynamic" class="img-thumbnail" alt=""/>
+            <div id="carouselContent" class="carousel slide" data-bs-ride="carousel">
+              <div id="carouselContentInner" class="carousel-inner">
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselContent" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselContent" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+          <div id="divToast" class="mx-auto my-auto toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div id="divToastMessage" class="toast-body">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
           </div>
         </div>
     </div>

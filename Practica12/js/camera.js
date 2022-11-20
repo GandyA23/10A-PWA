@@ -3,19 +3,29 @@ class Camera {
         this._videoNode = videoNode;
     }
 
-    power () {
+    isPowerOn () {
+        return this._videoNode.srcObject && this._stream;
+    }
+
+    async power () {
         // Obten la camara del dispositivo
-        navigator.mediaDevices.getUserMedia({
+        const stream = await navigator.mediaDevices.getUserMedia({
             audio: false,
             video: {
                 width: 300,
                 height: 300
             }
-        }).then((stream) => {
+        });
+
+        if (stream) {
             // Empieza la transmisión en el objeto de Video
             this._videoNode.srcObject = stream;
             this._stream = stream;
-        });
+
+            return true;
+        } 
+
+        return false;
     }
 
     off () {
